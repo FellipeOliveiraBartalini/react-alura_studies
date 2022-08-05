@@ -1,8 +1,10 @@
 import React from 'react';
+import ITarefa from '../../types/tarefa.type';
 import Button from '../button';
 import style from './form.module.scss';
+import {v4 as uuidv4} from 'uuid';
 
-class Form extends React.Component {
+class Form extends React.Component<{setTarefas: React.Dispatch<React.SetStateAction<Array<ITarefa>>>}> {
     state = {
         tarefa: "",
         tempo: "00:00"
@@ -10,8 +12,22 @@ class Form extends React.Component {
 
     adicionarTarefa(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log('state > ', this.state);
-        
+        this.props.setTarefas(tarefasAntigas =>
+            [
+                ...tarefasAntigas,
+                {
+                    ...this.state,
+                    selecionado: false,
+                    completado: false,
+                    id: uuidv4()
+                }
+            ]
+        );
+
+        this.setState({
+            tarefa: "",
+            tempo: "00:00"
+        })
     }
 
     render() {
@@ -26,12 +42,15 @@ class Form extends React.Component {
                             value={this.state.tarefa}
                             onChange={event => {this.setState({ ...this.state, tarefa: event.target.value })}}
                             id='tarefa'
-                            placeholder='O que voçê quer estudar?' />
+                            placeholder='O que voçê quer estudar?'
+                            required    
+                        />
                     </label>
                 </div>
 
                 <div className={style.inputContainer}>
                     <label htmlFor="tempo">
+                        Tempo
                         <input
                             type="time"
                             step="1"
@@ -44,7 +63,7 @@ class Form extends React.Component {
                             required />
                     </label>
                 </div>
-                <Button>Adicionar</Button>
+                <Button type="submit">Adicionar</Button>
             </form>
         )
     }
