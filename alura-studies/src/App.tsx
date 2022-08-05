@@ -1,9 +1,12 @@
 import React from 'react';
+import Form from './_components/form';
+import List from './_components/list';
 
 function App() {
 	return (
 		<div className="App">
-			<h1>Hello, World!</h1>
+			<Form />
+			<List />
 		</div>
 	);
 }
