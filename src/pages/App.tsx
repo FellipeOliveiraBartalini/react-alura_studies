@@ -22,16 +22,12 @@ function App() {
 			setSelecionado(undefined);
 			setTarefas(tarefasAnteriores => tarefasAnteriores.map(tarefa => {
 				if (tarefa.id === selecionado.id) {
-					console.log(1, tarefa);
-					
 					return {
 						...tarefa,
 						selecionado: false,
 						completado: true
 					}
-				}
-				console.log(2);
-				
+				}				
 				return tarefa;
 			}))
 		}
