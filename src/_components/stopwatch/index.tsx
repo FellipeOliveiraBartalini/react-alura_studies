@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { timeToSeconds } from '../../common/utils/time';
 import ITarefa from '../../types/tarefa.type';
 import Button from '../button';
@@ -12,9 +12,11 @@ interface Props {
 function Stopwatch({ selecionado }: Props) {
     const[ time, setTime ] = useState<number>();
 
-    if (selecionado?.tempo) {
-        setTime(timeToSeconds(selecionado.tempo));
-    }
+    useEffect(() => {
+        if (selecionado?.tempo) {
+            setTime(timeToSeconds(selecionado.tempo))
+        }
+    }, [selecionado]);
 
     return (
         <div className={style.stopwatch}>
