@@ -6,10 +6,11 @@ import Clock from './clock';
 import style from './stopwatch.module.scss';
 
 interface Props {
-    selecionado: ITarefa | undefined
+    selecionado: ITarefa | undefined,
+    finalizarTarefa: () => void
 }
 
-function Stopwatch({ selecionado }: Props) {
+function Stopwatch({ selecionado, finalizarTarefa }: Props) {
     const[ time, setTime ] = useState<number>();
 
     useEffect(() => {
@@ -18,17 +19,25 @@ function Stopwatch({ selecionado }: Props) {
         }
     }, [selecionado]);
 
+    function countdown(time: number = 0) {
+        setTimeout(() => {
+            if (time >= 0) {
+                setTime(time--);
+                return countdown(time)
+            }
+            finalizarTarefa();
+        }, 1000)
+    }
+
     return (
         <div className={style.stopwatch}>
             <p className={style.title}>Escolha um card e inicie o cronômetro</p>
 
-            Tempo: {time}
-
             <div className={style.clockWrapper}>
-                <Clock />
+                <Clock  time={time} />
             </div>
 
-            <Button>
+            <Button onClick={() => { countdown(time) }}>
                 Começar
             </Button>
         </div>
