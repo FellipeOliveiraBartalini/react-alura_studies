@@ -7,11 +7,19 @@ import style from './app.module.scss';
 
 function App() {
     const [ tarefas, setTarefas ] = useState<Array<ITarefa>>([]);
+	const [selecionado, setSelecionado] = useState<ITarefa>();
+
+	function selectTarefa(tarefaSelecionada: ITarefa) {
+		setSelecionado(tarefaSelecionada);
+	}
 
 	return (
 		<div className={style.AppStyle}>
 			<Form setTarefas={setTarefas} />
-			<List tarefas={tarefas} />
+			<List
+				tarefas={tarefas}
+				selecionaTarefa={selectTarefa}
+			/>
 			<Stopwatch />
 		</div>
 	);
